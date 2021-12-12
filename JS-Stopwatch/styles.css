@@ -56,5 +56,8 @@ body{
     color: white;
 }
 .redText {
-    color:red
+    color:red;
+}
+.greenText{
+    color: green;;
 }
