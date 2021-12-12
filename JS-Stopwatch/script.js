@@ -5,6 +5,7 @@ const lapButton = document.querySelector("[data-lapButton]");
 const stopButton = document.querySelector("[data-stopButton]");
 const lapHistoryTextElement = document.querySelector("[data-lapHistory]");
 
+
 stopButton.style.display = "none";
 lapButton.style.display = "none";
 let lapCount = 0;
