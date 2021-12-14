@@ -1,0 +1,38 @@
+body{
+    background-color: #1c1c1c;
+}
+[data-clock], [data-date]{
+    text-align: center;
+    font-size: 60;
+    color: white;
+} 
+[data-date]{
+    font-size: 30;
+}
+[data-calendar]{
+    display: grid;
+    grid-template-columns: repeat(7,217px);
+    grid-template-rows: repeat(6,98px);
+    padding-top: 10px;
+}
+[data-dateBox]{
+    border-style: solid;
+    border-color: #1c1c1c;
+    color: white;
+    font-size: 20px;
+}
+[data-dateNumber]{
+    color: #1c1c1c;
+    font-size: 15px;
+    font-weight: bold;
+    width: fit-content;
+}
+[data-dateBoxText]{
+    padding: 5px;
+    word-wrap: normal;
+    font-weight: bold;
+    color: #1c1c1c;
+    font-size: 13px;
+    width: 100%;
+    height: 80%;
+}
