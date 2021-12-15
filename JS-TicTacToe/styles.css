@@ -1,0 +1,42 @@
+body{
+    background-color: #1c1c1c;
+}
+[data-playGrid]{
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(3,235px);
+    grid-template-rows: repeat(3,235px);
+    width: 50%;
+    float: left;
+}
+[data-tickBox]{
+    background-color: gray;
+    line-height: 235px;
+    font-size: 235px;
+    border: solid;
+    border-color: white  ;
+    font-family: cursive;
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+[data-container]{
+    float: right;
+    width: 50%;
+    color: white;
+}
+[data-currentPlayer]{
+    float: top;
+    line-height: 175px;
+    height: 50%;
+    text-align: center;
+    font-size: 120px;   
+}
+[data-currentScore]{
+    line-height: 325px;
+    font-size: 150px;
+    float: bottom;
+    height: 50%;
+    text-align: center;
+}
