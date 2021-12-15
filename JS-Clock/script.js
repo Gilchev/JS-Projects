@@ -62,3 +62,14 @@ function fillCalendar(){
 
 setDateTime();
 fillCalendar();
+
+const dateBoxes = document.querySelectorAll("[data-dateBox]");
+dateBoxes.forEach(box => {
+    let contents = box.children;
+    let currentTime = new Date();
+    let dayOfMonth = currentTime.getDate();
+    if(+contents[0].innerText === dayOfMonth){
+        box.style.border = "thick solid #0000FF";
+    }
+
+});
