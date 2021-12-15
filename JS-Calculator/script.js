@@ -22,7 +22,7 @@ function numberButtonPress(buttonPressed, operand){
         if(operand.includes(".")) return operand;
         if(!operand) return "0.";
     }
-    if(buttonPressed === "0" && operand.length >= 1) return operand; //remove repeating 0s at start (so number cant be 00002)
+    if(buttonPressed === "0" && operand === "0") return operand; //remove repeating 0s at start (so number cant be 00002)
     return operand += buttonPressed; //append the digit otherwise
 }
 //calculate depending on operator and add operation to history
@@ -109,7 +109,7 @@ equalsButton.addEventListener("click", () =>{
     currentOperandTextElement.innerText = "";
     
 })
-//add modifier functions to corresponding button
+//add   modifier functions to corresponding button
 modifierButtons.forEach(button =>{
     button.addEventListener("click", () =>{
         switch(button.innerText){
