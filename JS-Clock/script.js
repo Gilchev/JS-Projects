@@ -9,7 +9,7 @@ let calendarDays = [];
 function createCalendarBoxes(){
     let boxElementString = `<div data-dateBox style="background-color:Grey;">
     <div data-dateNumber></div>
-    <div data-dateBoxText></div>
+    <textarea data-dateBoxText></textarea>
 </div>`
     for(let i = 42; i >= 1; i--){
         if(i % 7 === 0) {
@@ -19,7 +19,7 @@ function createCalendarBoxes(){
         }
         else calendarBox.innerHTML = `<div data-dateBox style="background-color:Lightgrey;">
                 <div data-dateNumber></div>
-                 <div data-dateBoxText></div>
+                 <textarea data-dateBoxText></textarea>
             </div>`.concat(calendarBox.innerHTML)
     }
 }
@@ -62,12 +62,3 @@ function fillCalendar(){
 
 setDateTime();
 fillCalendar();
-
-const calendarBoxElements = document.querySelectorAll("[data-dateBox]");
-const calendarBoxTextElements = document.querySelectorAll("[data-dateBoxText]")
-calendarBoxTextElements.forEach(element => {
-    element.addEventListener("click", () =>{
-        let popUpText = prompt(element.innerText.length === 0 ? "Add note:" : "Edit note:", element.innerText);
-        element.innerText = popUpText;
-    })
-})
