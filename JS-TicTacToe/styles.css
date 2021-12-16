@@ -14,7 +14,7 @@ body{
     line-height: 235px;
     font-size: 235px;
     border: solid;
-    border-color: white  ;
+    border-color: darkgray  ;
     font-family: cursive;
     -webkit-user-select: none; /* Safari */        
     -moz-user-select: none; /* Firefox */
