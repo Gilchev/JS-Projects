@@ -1,6 +1,4 @@
 "use strict";
-const deck = document.querySelector(".deck");
-const revealedCards = document.querySelector(".revealedCard");
 let deckOfCards = [
   "2H",
   "3H",
@@ -55,22 +53,70 @@ let deckOfCards = [
   "KS",
   "AS",
 ];
+const deck = document.querySelector(".deck");
+const revealedCards = document.querySelector(".revealedCard");
+const gameField = document.querySelector(".body");
+const selectedCardImage = document.getElementById("cursor");
 
 let deckArray = [];
 let revealedCardsArray = [];
+let revealedCard;
+let selectedCard = {
+  origin,
+  cardName: "",
+  exists: false,
+};
+
 while (deckOfCards.length > 0) {
   let randomCard = deckOfCards[Math.floor(Math.random() * deckOfCards.length)];
   deckArray.push(randomCard);
   deckOfCards.splice(deckOfCards.indexOf(randomCard), 1);
-  console.log(randomCard);
 }
+
+function updateRevealedCards() {
+  revealedCards.innerHTML = `<img src="cards/${
+    revealedCardsArray[revealedCardsArray.length - 1]
+  }.png" />`;
+}
+
+document.addEventListener("mousemove", (e) => {
+  let x = e.clientX;
+  let y = e.clientY;
+  selectedCardImage.style.left = `${x}px`;
+  selectedCardImage.style.top = `${y}px`;
+});
+
+//on-click function to flip through the deck, and flip it over if there are no more cards left
 deck.addEventListener("click", () => {
-  let revealedCard = deckArray.pop();
-  if (revealedCard) {
-    revealedCardsArray.push(revealedCard);
-    revealedCards.innerHTML = `<img src="cards/${revealedCard}.png" />`;
-  } else {
-    deckArray = revealedCardsArray.reverse().slice();
-    revealedCardsArray = [];
+  if (!selectedCard.cardName) {
+    revealedCard = deckArray.pop();
+    deckArray.length === 0 ? (deck.innerHTML = "") : null;
+    if (revealedCard) {
+      revealedCardsArray.push(revealedCard);
+      updateRevealedCards();
+    } else {
+      deckArray = revealedCardsArray.reverse().slice();
+      revealedCardsArray = [];
+      revealedCards.innerHTML = "";
+      deck.innerHTML = `<img src="miscimages/cardback.png" alt="" />`;
+    }
+  }
+});
+
+revealedCards.addEventListener("click", () => {
+  if (!selectedCard.cardName) {
+    if (revealedCardsArray.length === 0) return;
+    selectedCard.origin = "revealedCards";
+    selectedCard.cardName = revealedCardsArray.pop();
+    updateRevealedCards();
+    selectedCardImage.innerHTML = `<img src="cards/${selectedCard.cardName}.png" />`;
+    document.body.style.cursor = "none";
+  } else if (selectedCard.cardName && selectedCard.origin === "revealedCards") {
+    selectedCard.origin = "";
+    revealedCardsArray.push(selectedCard.cardName);
+    selectedCard.cardName = "";
+    updateRevealedCards();
+    selectedCardImage.innerHTML = ``;
+    document.body.style.cursor = "default";
   }
 });

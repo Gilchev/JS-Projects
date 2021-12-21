@@ -1,8 +1,14 @@
 body {
   background-color: green;
+  cursor: url("cards/10C.png"), auto;
+}
+#cursor {
+  position: absolute;
+  pointer-events: none;
+  z-index: 9999;
 }
 .topContainer {
-  max-width: 1400px;
+  max-width: 1300px;
   position: relative;
   top: 5%;
   left: 5%;
@@ -11,52 +17,43 @@ body {
 }
 .deckAndRevealedCard {
   float: left;
-  background-color: red;
   width: 300px;
   height: 175px;
   color: red;
 }
 .deck {
   float: left;
-  background-color: yellow;
-  width: 125px;
-  height: 100%;
 }
 .revealedCard {
   float: right;
-  background-color: yellow;
-  width: 120px;
-  height: 100%;
 }
 .suiteTargets {
   float: right;
-  background-color: red;
   width: 650px;
   height: 175px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
-.spadesTarget {
-  background-color: yellow;
-  width: 125px;
+.heartsTarget,
+.diamondsTarget,
+.spadesTarget,
+.clubsTarget,
+.revealedCard,
+.deck {
+  border-style: solid;
+  border-color: white;
+  border-radius: 5px;
+  width: 120px;
   height: 100%;
-}
-.heartsTarget {
-  background-color: yellow;
-  width: 125px;
-  height: 100%;
-}
-.diamondsTarget {
-  background-color: yellow;
-  width: 125px;
-  height: 100%;
-}
-.clubsTarget {
-  background-color: yellow;
-  width: 125px;
+  width: 120px;
   height: 100%;
 }
 img {
   max-width: 125px;
   max-height: 175px;
+}
+.column {
+  width: 120px;
+  height: 600px;
+  background-color: red;
 }
