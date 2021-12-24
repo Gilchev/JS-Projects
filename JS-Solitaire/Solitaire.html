@@ -8,29 +8,32 @@
     <title>Solitaire</title>
   </head>
   <body>
-    <div id="cursor"></div>
-    <div class="topContainer">
-      <span class="deckAndRevealedCard">
-        <span class="deck">
-          <img src="miscimages/cardback.png" alt="" />
-        </span>
-        <span class="revealedCard"></span>
+    <img id="selection" src="" alt="" />
+    <div class="top-container">
+      <!-- <span class="deck-and-revealed-card"> -->
+      <span class="deck">
+        <img id="deck-image" src="miscimages/cardback.png" alt="" />
       </span>
-      <span class="suiteTargets">
-        <span class="heartsTarget"></span>
-        <span class="diamondsTarget"></span>
-        <span class="spadesTarget"></span>
-        <span class="clubsTarget"></span>
+      <span class="revealed-card">
+        <img id="revealed-image" src="" alt="" />
       </span>
-      <div class="bottomContainer">
-        <span class="column" id="first"></span>
-        <span class="column" id="second"></span>
-        <span class="column" id="third"></span>
-        <span class="column" id="fourth"></span>
-        <span class="column" id="fifth"></span>
-        <span class="column" id="sixth"></span>
-        <span class="column" id="seventh"></span>
-      </div>
+      <span class="counters"> Moves: 10</span>
+      <!-- </span> -->
+      <!-- <span class="suite-targets"> -->
+      <span class="hearts target"></span>
+      <span class="diamonds target"></span>
+      <span class="spades target"></span>
+      <span class="clubs target"></span>
+      <!-- </span> -->
+    </div>
+    <div class="bottom-container">
+      <span class="column 0"></span>
+      <span class="column 1"></span>
+      <span class="column 2"></span>
+      <span class="column 3"></span>
+      <span class="column 4"></span>
+      <span class="column 5"></span>
+      <span class="column 6"></span>
     </div>
   </body>
 </html>
