@@ -8,7 +8,7 @@
     <title>Solitaire</title>
   </head>
   <body>
-    <img id="selection" src="" alt="" />
+    <div id="selection"></div>
     <div class="top-container">
       <!-- <span class="deck-and-revealed-card"> -->
       <span class="deck">
@@ -20,10 +20,26 @@
       <span class="counters"> Moves: 10</span>
       <!-- </span> -->
       <!-- <span class="suite-targets"> -->
-      <span class="hearts target"></span>
-      <span class="diamonds target"></span>
-      <span class="spades target"></span>
-      <span class="clubs target"></span>
+      <img
+        onclick="targetClick(this)"
+        class="target 0"
+        src="miscimages/empty.png"
+      />
+      <img
+        onclick="targetClick(this)"
+        class="target 1"
+        src="miscimages/empty.png"
+      />
+      <img
+        onclick="targetClick(this)"
+        class="target 2"
+        src="miscimages/empty.png"
+      />
+      <img
+        onclick="targetClick(this)"
+        class="target 3"
+        src="miscimages/empty.png"
+      />
       <!-- </span> -->
     </div>
     <div class="bottom-container">

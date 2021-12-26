@@ -1,9 +1,15 @@
 body {
   background-color: green;
-  margin-left: 5%;
-  margin-right: 5%;
+  overflow: hidden;
+  margin: 5%;
 }
 #selection {
+  overflow: hidden;
+  list-style-type: none;
+  display: grid;
+  grid-template-rows: repeat(20, 1fr);
+  width: 120px;
+  max-height: 550px;
   position: absolute;
   pointer-events: none;
   z-index: 9999;
@@ -17,10 +23,11 @@ body {
 }
 .top-container,
 .bottom-container {
+  margin-left: 5%;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   max-width: 1300px;
-  max-height: 550px;
+  max-height: 500px;
 }
 .target,
 .revealed-card,
@@ -28,18 +35,19 @@ body {
   border-style: solid;
   border-color: white;
   border-radius: 5px;
-  width: 120px;
-  height: 175px;
-  width: 120px;
+  width: 100px;
+  height: 140.35px;
 }
 img {
-  max-width: 125px;
-  max-height: 175px;
+  max-width: 100px;
+  /* max-height: 175px; */
 }
 .column {
   list-style-type: none;
   display: grid;
   grid-template-rows: repeat(20, 1fr);
-  width: 120px;
+  width: 100px;
   max-height: inherit;
+  border-radius: 5px;
+  position: relative;
 }

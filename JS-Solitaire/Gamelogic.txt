@@ -1,0 +1,22 @@
+#1 Deck:
+if deck array has elements
+    send topmost card to revealed array
+    update deck image
+if deck array has no elements
+    "flip over" revealed array and put it in deck array
+#2 Revealed Pile:
+if there is no picked up card(s)
+    take the topmost card and copy it to selected card
+    update revealed cards array
+if there is a picked up card
+    check if its origin is from revealed array, and if so, put it back on topmost
+#3 Empty column:
+    if selection is a King(or starts with a King), put it down in empty space
+    update column array
+#4 Card column:
+if there is no selection
+    if clicked card is flipped-over:
+        pick it up as a single if its on bottom of column
+        pick it up and the rest to bottom if it isnt on the bottom
+    if it isnt flipped over
+    

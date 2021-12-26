@@ -7,12 +7,14 @@ const gameField = document.querySelector(".body");
 const selectionImage = document.querySelector("#selection");
 const revealedCardsImage = document.querySelector("#revealed-image");
 const cardColumns = document.querySelectorAll(".column");
+const targets = document.querySelectorAll(".target");
 //#2 Playing card class to create every card as object
 class PlayingCard {
   constructor(power, suite) {
     this.power = power;
     this.suite = suite;
     this.origin;
+    this.isFlipped = true;
   }
   get value() {
     if (this.power >= 2 && this.power <= 10) {
@@ -49,25 +51,11 @@ let initialDeckArray = [];
 let deckArray = [];
 let revealedCardsArray = [];
 let revealedCard, selectedCard;
-let firstColumn = [];
-let secondColumn = [];
-let thirdColumn = [];
-let fourthColumn = [];
-let fifthColumn = [];
-let sixthColumn = [];
-let seventhColumn = [];
-let columnsArray = [
-  firstColumn,
-  secondColumn,
-  thirdColumn,
-  fourthColumn,
-  fifthColumn,
-  sixthColumn,
-  seventhColumn,
-];
+let columnsArray = [[], [], [], [], [], [], []];
+let targetsArray = [[], [], [], []];
 //#4 For each suite combine with each power and create a playing card
+let suites = ["H", "C", "S", "D"];
 function createDeck() {
-  let suites = ["H", "C", "S", "D"];
   let powers = [
     "2",
     "3",
@@ -96,7 +84,7 @@ function dealColumns() {
     for (let j = i; j >= 0; j--) {
       let randomCard =
         initialDeckArray[Math.floor(Math.random() * initialDeckArray.length)];
-      randomCard.origin = `column ${i + 1}`;
+      randomCard.origin = `column ${i}`;
       randomCard["isFlipped"] = j === 0 ? true : false;
       columnsArray[i].push(randomCard);
       initialDeckArray.splice(initialDeckArray.indexOf(randomCard), 1);
@@ -144,19 +132,34 @@ function init() {
 init();
 //#9 sets selectionImage elements source as the selected card's and hides cursor
 function pickUpCard() {
-  selectionImage.src = `${selectedCard.image}`;
-  document.body.style.cursor = "none";
+  if (!Array.isArray(selectedCard)) {
+    selectionImage.innerHTML = `<img class="selection-image" src="${selectedCard.image}"/>`;
+    document.body.style.cursor = "none";
+  } else {
+    let selectionLength = selectedCard.length;
+    for (let i = 0; i < selectionLength; i++) {
+      selectionImage.innerHTML += `<img class="selection-image"style="grid-column: 1; grid-row: ${
+        i + 1
+      } / span 2;" src="${selectedCard[i].image}"/>`;
+    }
+  }
 }
 //#10 clears selected card, selection image and restores cursor
 function dropCard() {
   selectedCard = null;
-  selectionImage.src = "";
+  selectionImage.innerHTML = "";
   document.body.style.cursor = "default";
 }
 //#11 wipes a column clean and renders it anew with proper styling and functions
 function updateColumn(i) {
   cardColumns[i].innerHTML = "";
+  if (columnsArray[i].length === 0) {
+    cardColumns[
+      i
+    ].innerHTML = `<img onclick="columnClick(this)" src="miscimages/empty.png" />`;
+  }
   for (let j = 0; j < columnsArray[i].length; j++) {
+    columnsArray[i][j].origin = `column ${i}`;
     if (columnsArray[i][j].isFlipped) {
       cardColumns[
         i
@@ -173,30 +176,107 @@ function updateColumn(i) {
   }
 }
 
+function updateTarget(d) {
+  targets[d].src = `${selectedCard.image}`;
+}
+
+//#12 Flip-over function that is called when clicked on a down facing card
+function flip(columnIndex) {
+  columnsArray[columnIndex][
+    columnsArray[columnIndex].length - 1
+  ].isFlipped = true;
+  updateColumn(columnIndex);
+}
+
+function targetClick(d) {
+  if (selectedCard) {
+    let targetIndex = String(d.classList).split(" ").pop();
+    if (targetsArray[targetIndex].length === 0 && selectedCard.value === 1) {
+      targetsArray[targetIndex].push(selectedCard);
+      updateTarget(targetIndex);
+      dropCard();
+    } else if (
+      targetsArray[targetIndex].length >= 1 &&
+      targetsArray[targetIndex][targetsArray[targetIndex].length - 1].suite ===
+        selectedCard.suite &&
+      targetsArray[targetIndex][targetsArray[targetIndex].length - 1].value ===
+        selectedCard.value - 1
+    ) {
+      targetsArray[targetIndex].push(selectedCard);
+      updateTarget(targetIndex);
+      dropCard();
+    }
+  }
+  if (
+    targetsArray[0][12] &&
+    targetsArray[1][12] &&
+    targetsArray[2][12] &&
+    targetsArray[3][12]
+  ) {
+    alert("kecnq");
+  }
+}
+
 function columnClick(d) {
   let columnIndex = String(d.parentElement.classList).split(" ").pop();
   if (!selectedCard) {
     let cardImageName = String(d.src).split("/");
     const l = cardImageName.length;
     cardImageName = `${cardImageName[l - 2]}/${cardImageName[l - 1]}`;
-    if (cardImageName === "cardback.png") return;
-    let cardIndex = columnsArray[columnIndex]
-      .map((e) => e.image)
-      .indexOf(cardImageName);
-
-    selectedCard = columnsArray[columnIndex].pop();
-    pickUpCard();
-    updateColumn(columnIndex);
+    if (cardImageName === "miscimages/cardback.png") {
+      flip(columnIndex);
+    } else {
+      let cardIndex = columnsArray[columnIndex]
+        .map((e) => e.image)
+        .indexOf(cardImageName);
+      if (cardIndex === columnsArray[columnIndex].length - 1) {
+        selectedCard = columnsArray[columnIndex].pop();
+        pickUpCard();
+      } else {
+        selectedCard = columnsArray[columnIndex].splice(
+          cardIndex,
+          columnsArray[columnIndex].length - cardIndex
+        );
+      }
+      pickUpCard();
+      updateColumn(columnIndex);
+    }
   } else {
     let targetCard =
       columnsArray[columnIndex][columnsArray[columnIndex].length - 1];
-    if (
-      selectedCard.color !== targetCard.color &&
-      selectedCard.value === targetCard.value - 1
-    ) {
-      columnsArray[columnIndex].push(selectedCard);
-      dropCard();
-      updateColumn(columnIndex);
+    if (!Array.isArray(selectedCard)) {
+      if (columnsArray[columnIndex].length === 0 && selectedCard.value === 13) {
+        columnsArray[columnIndex].push(selectedCard);
+        dropCard();
+        updateColumn(columnIndex);
+      } else if (
+        (selectedCard.color !== targetCard.color &&
+          selectedCard.value === targetCard.value - 1) ||
+        selectedCard.origin === targetCard.origin
+      ) {
+        columnsArray[columnIndex].push(selectedCard);
+        dropCard();
+        updateColumn(columnIndex);
+      }
+    } else {
+      if (
+        columnsArray[columnIndex].length === 0 &&
+        selectedCard[0].value === 13
+      ) {
+        columnsArray[columnIndex] =
+          columnsArray[columnIndex].concat(selectedCard);
+        dropCard();
+        updateColumn(columnIndex);
+      } else if (
+        (selectedCard[0].color !== targetCard.color &&
+          selectedCard[0].value === targetCard.value - 1) ||
+        selectedCard[0].origin === targetCard.origin
+      ) {
+        columnsArray[columnIndex] =
+          columnsArray[columnIndex].concat(selectedCard);
+        dropCard();
+        updateColumn(columnIndex);
+      }
     }
   }
 }
@@ -210,7 +290,7 @@ function updateRevealedCards() {
     revealedCardsImage.src = ``;
   }
 }
-//14
+//#14 eventlistener on whole document to have selectionImage follow the cursor
 document.addEventListener("mousemove", (e) => {
   let x = e.clientX;
   let y = e.clientY;
@@ -218,7 +298,7 @@ document.addEventListener("mousemove", (e) => {
   selectionImage.style.top = `${y}px`;
 });
 
-//on-click function to flip through the deck, and flip it over if there are no more cards left
+//#15 on-click function to flip through the deck, and flip it over if there are no more cards left
 deck.addEventListener("click", () => {
   if (!selectedCard) {
     revealedCard = deckArray.pop();
@@ -235,7 +315,7 @@ deck.addEventListener("click", () => {
     }
   }
 });
-
+//#16 Picks up the top-most card, or sets it back(if its origin is from there)
 revealedCards.addEventListener("click", () => {
   if (!selectedCard) {
     if (revealedCardsArray.length === 0) return;
