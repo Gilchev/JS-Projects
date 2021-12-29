@@ -199,6 +199,7 @@ function checkForVictory() {
     document.querySelector(".overlay").classList.toggle("hidden");
     document.querySelector("#final-time").innerText =
       document.querySelector(".timer").innerText;
+    clearTimeout(counter);
   }
 }
 
@@ -237,7 +238,7 @@ function updateColumn(i) {
     drawCard(i, j);
   }
 }
-//Updates selected target's image to either the last element in corresponding array or empty image
+//Updates selected target's image to either the last element in corresponding array or empty image and checks for victory condition
 function updateTarget(target) {
   if (targetsArray[target].length > 0) {
     targets[target].src = `${
@@ -246,6 +247,7 @@ function updateTarget(target) {
   } else {
     targets[target].src = `miscimages/empty.png`;
   }
+  checkForVictory();
 }
 
 // Flip-over function that is called when clicked on a face-down interactable card
@@ -278,7 +280,6 @@ function targetClick(target) {
     pickUpCard();
   }
   updateTarget(targetIndex);
-  checkForVictory();
 }
 // Function only present on empty image in columns, which checks if there is a selected card/s and if so, checks if the card(or leading card if there are multiple cards being dragged) is a King. If it is, place whole selection on the empty spot
 function emptyColumnClick(card) {
